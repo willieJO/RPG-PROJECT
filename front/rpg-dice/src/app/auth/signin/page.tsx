@@ -1,23 +1,63 @@
 'use client'
 
-import React from "react";
+import React, { useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import Breadcrumb from "@/components/Breadcrumbs/Breadcrumb";
 import DefaultLayout from "@/components/Layouts/DefaultLayout";
 import { useRouter } from 'next/navigation'
+import { useEffect } from 'react';
+import ConditionalRedirect from "@/components/ConditionalRedirect/ConditionalRedirect ";
+import "react-toastify/dist/ReactToastify.css";
+import axios from 'axios';
+import api from "@/hooks/api";
+import { ToastContainer, toast } from 'react-toastify';
+
+interface SignInProps {
+  expired: any | null;
+}
 
 const SignIn: React.FC = () => {
   const router = useRouter()
+  const [email, setEmail] = useState<string>("");
+  const [senha, setSenha] = useState<string>("");
+  useEffect(() => {
+    const urlParams = new URLSearchParams(window.location.search);
+    const expired = urlParams.get('expired');
+    if (localStorage.getItem("accessToken") != null ) {
+      window.location.href = '/rolagem'; 
+    }
+  }, []);
+  
   function entrar(e: MouseEvent) {
     e.preventDefault();
-    localStorage.setItem("isLogin","true");
-    router.push('/rolagem');
+    api.defaults.withCredentials = true;
+
+    api.post('/oauth/token', {
+      grant_type: 'password',
+      username: email,
+      password: senha,
+    }, {
+      headers: {
+        'Content-Type': 'application/x-www-form-urlencoded',
+        'Authorization': 'Basic Y2xpZW50OmNsaWVudA==',
+      },
+    })
+    .then((response : any) => {
+      localStorage.setItem("accessToken", response.data.access_token);
+      localStorage.setItem("name", response.data.name);
+      router.push("/rolagem")
+    }).catch((e:any) => {
+      toast.error("Credenciais invalidas!");
+    })
+    
   }
   return (
     <DefaultLayout>
+       <ConditionalRedirect condition={localStorage.getItem("accessToken") !== null} redirectPath="/rolagem" />
+       <ToastContainer theme="dark" position="top-right" />
       <div className="rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark">
-        <div className="flex flex-wrap items-center">
+        <div className="flex flex-wrap  items-center">
           <div className="hidden w-full xl:block xl:w-1/2">
             <div className="px-26 py-17.5 text-center">
               <p className="2xl:px-20">
@@ -37,7 +77,6 @@ const SignIn: React.FC = () => {
 
           <div className="w-full border-stroke dark:border-strokedark xl:w-1/2 xl:border-l-2">
             <div className="w-full p-4 sm:p-12.5 xl:p-17.5">
-              <form>
                 <div className="mb-4">
                   <label className="mb-2.5 block font-medium text-black dark:text-white">
                     Email
@@ -45,6 +84,9 @@ const SignIn: React.FC = () => {
                   <div className="relative">
                     <input
                       type="email"
+                      onChange={(e) => {
+                        setEmail(e.target.value);
+                      }}
                       placeholder="Digite o seu email"
                       className="w-full rounded-lg border border-stroke bg-transparent py-4 pl-6 pr-10 text-black outline-none focus:border-primary focus-visible:shadow-none dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
                     />
@@ -76,6 +118,9 @@ const SignIn: React.FC = () => {
                   <div className="relative">
                     <input
                       type="password"
+                      onChange={(e) => {
+                        setSenha(e.target.value);
+                      }}
                       placeholder="Digite a sua senha"
                       className="w-full rounded-lg border border-stroke bg-transparent py-4 pl-6 pr-10 text-white outline-none focus:border-primary focus-visible:shadow-none dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
                     />
@@ -107,13 +152,12 @@ const SignIn: React.FC = () => {
                 <div className="mb-5">
                   <input
                     onClick={(e) => entrar(e.nativeEvent)}
-                    type="submit"
+                    
                     value="Entrar"
-                    className="w-full cursor-pointer rounded-lg border border-primary bg-primary p-4 text-white transition hover:bg-opacity-60"
+                    className="w-full text-center cursor-pointer rounded-lg border border-primary bg-primary p-4 text-white transition hover:bg-opacity-60"
                   />
                 </div>
-
-                <button className="flex w-full items-center justify-center gap-3.5 rounded-lg border border-stroke bg-gray p-4 hover:bg-opacity-50 dark:border-strokedark dark:bg-meta-4 dark:hover:bg-opacity-50">
+                {/*<button className="flex w-full items-center justify-center gap-3.5 rounded-lg border border-stroke bg-gray p-4 hover:bg-opacity-50 dark:border-strokedark dark:bg-meta-4 dark:hover:bg-opacity-50">
                   <span>
                     <svg
                       width="20"
@@ -144,7 +188,8 @@ const SignIn: React.FC = () => {
                     </svg>
                   </span>
                   Entrar com o Google
-                </button>
+                </button> */}
+                
 
                 <div className="mt-6 text-center">
                   <p>
@@ -154,7 +199,6 @@ const SignIn: React.FC = () => {
                     </Link>
                   </p>
                 </div>
-              </form>
             </div>
           </div>
         </div>

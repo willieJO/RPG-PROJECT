@@ -16,6 +16,7 @@
     "@mui/x-date-pickers": "^6.19.7",
     "@tanstack/react-table": "^8.13.2",
     "apexcharts": "^3.45.2",
+    "axios": "^1.6.8",
     "flatpickr": "^4.6.13",
     "jsvectormap": "^1.5.3",
     "material-react-table": "^2.12.1",
@@ -24,7 +25,8 @@
     "react": "^18",
     "react-apexcharts": "^1.4.1",
     "react-data-table-component": "^7.6.2",
-    "react-dom": "^18"
+    "react-dom": "^18",
+    "react-toastify": "^10.0.5"
   },
   "devDependencies": {
     "@types/node": "^20",

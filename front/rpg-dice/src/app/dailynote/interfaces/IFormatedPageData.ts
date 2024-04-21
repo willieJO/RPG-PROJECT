@@ -1,0 +1,37 @@
+export interface IFormatedPageData {
+    id: number;
+    unidade: string;
+    cluster: string;
+    frequencia: string;
+    usuario: string;
+    data: string;
+    hora: string;
+    centroDeCusto: string;
+    postoDeTrabalho: string;
+    grupoDeEmpresa: string;
+    grupoDeProcessos: string;
+    cargo: string;
+    indicador: string;
+    monitoramento: string;
+    tarefa: string;
+    peso: number;
+    pesoCalculado: number;
+    intervaloMinimo: number;
+    intervaloMaximo: number;
+    valor: string;
+    campoTexto: string;
+    conforme: string;
+    naoConformeComPeso: number;
+    grupoDeQualificacao: string;
+    naoAvaliado: string;
+    avaliadoComPesos: number;
+    avaliacao: number;
+    amostra: number;
+    cabecalhoIndicador: string;
+    cabecalhoMonitoramento: string;
+    cabecalhoTarefa: string;
+    dataDeAdicao: string;
+    tipo: string;
+    historicoResultado: boolean;
+    historicoCabecalho: boolean;
+}
