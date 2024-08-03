@@ -49,7 +49,7 @@ public class RefreshTokenPostProcessor implements
 	private void adicionarRefreshTokenNoCookie(String refreshToken, HttpServletRequest req, HttpServletResponse resp) {
 		Cookie refreshTokenCookie = new Cookie("refreshToken", refreshToken);
 		refreshTokenCookie.setHttpOnly(false);
-		refreshTokenCookie.setSecure(false); 
+		refreshTokenCookie.setSecure(true); 
 		refreshTokenCookie.setPath("/");
 		refreshTokenCookie.setMaxAge(2592000); // 30 dias
 		resp.addHeader(HttpHeaders.SET_COOKIE, refreshTokenCookie.toString());
