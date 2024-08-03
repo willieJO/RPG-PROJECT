@@ -33,6 +33,11 @@ public class CorsFilter implements Filter {
         if (allowedOrigins.contains(originHeader)) {
             response.setHeader("Access-Control-Allow-Origin", originHeader);
             response.setHeader("Access-Control-Allow-Credentials", "true");
+			
+			String cookieHeader = response.getHeader("Set-Cookie");
+			if (cookieHeader != null && !cookieHeader.contains("SameSite")) {
+				response.setHeader("Set-Cookie", cookieHeader + "; SameSite=None; Secure");
+			}
 
             if ("OPTIONS".equals(request.getMethod())) {
                 response.setHeader("Access-Control-Allow-Methods", "POST, GET, DELETE, PUT, OPTIONS");
