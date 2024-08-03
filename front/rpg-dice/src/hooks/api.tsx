@@ -2,7 +2,7 @@
 import axios from 'axios';
 
 const api = axios.create({
-  baseURL: 'https://rpg-project.onrender.com', 
+  baseURL: 'http://localhost:8080', 
 });
 
 api.interceptors.response.use(
@@ -17,6 +17,7 @@ api.interceptors.response.use(
 );
 
 api.interceptors.request.use((config :any) => {
+  debugger
   if ( document.cookie != "") {
     const cookieValue = localStorage.getItem("accessToken");
     config.headers.Authorization = `Bearer ${cookieValue}`;
