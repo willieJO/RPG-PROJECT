@@ -34,7 +34,8 @@ public class RolagemController {
    
 	@GetMapping("ObterRolagensDoUsuario")
 	public ResponseEntity<?> ObterRolagensDoUsuario(HttpServletRequest request) {
-		Long userId = Long.parseLong(Utilidades.getInstance().getUserIdFromRequest(request));
+		//Long userId = Long.parseLong(Utilidades.getInstance().getUserIdFromRequest(request));
+		Long userId = (long) 1;
 		return _Service.ObterRolagensDoUsuario(userId);
 	}
 	
