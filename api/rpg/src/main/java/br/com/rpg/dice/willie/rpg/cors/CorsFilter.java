@@ -32,12 +32,11 @@ public class CorsFilter implements Filter {
 
         HttpServletRequest request = (HttpServletRequest) req;
         HttpServletResponse response = (HttpServletResponse) resp;
-
         String originHeader = request.getHeader("Origin");
         if (allowedOrigins.contains(originHeader)) {
             response.setHeader("Access-Control-Allow-Origin", originHeader);
             response.setHeader("Access-Control-Allow-Credentials", "true");
-			response.setHeader("Set-Cookie", "key=value; HttpOnly; SameSite=strict");
+			response.setHeader("SameSite","None");
             if ("OPTIONS".equals(request.getMethod())) {
                 response.setHeader("Access-Control-Allow-Methods", "POST, GET, DELETE, PUT, OPTIONS");
                 response.setHeader("Access-Control-Allow-Headers", "Authorization, Content-Type, Accept");
