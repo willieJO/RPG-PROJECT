@@ -41,6 +41,7 @@ const Settings = () => {
         api.get('/Rolagem/ObterRolagensDoUsuario', {
             headers: {
               'Content-Type': 'application/json',
+              'Token': localStorage.getItem("accessToken"),
             },
             withCredentials: true 
           })
