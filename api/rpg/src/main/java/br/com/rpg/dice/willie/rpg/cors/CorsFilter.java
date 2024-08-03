@@ -18,7 +18,7 @@ import org.springframework.stereotype.Component;
 @Order(Ordered.HIGHEST_PRECEDENCE)
 public class CorsFilter implements Filter {
 
-	private String originPermitida = "https://rpg-project-bay.vercel.app"; // TODO: Configurar para diferentes ambientes
+	private String originPermitida = "https://rpg-project-williejos-projects.vercel.app"; // TODO: Configurar para diferentes ambientes
 	
 	@Override
 	public void doFilter(ServletRequest req, ServletResponse resp, FilterChain chain)
