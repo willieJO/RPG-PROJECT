@@ -20,7 +20,7 @@ import org.springframework.stereotype.Component;
 @Order(Ordered.HIGHEST_PRECEDENCE)
 public class CorsFilter implements Filter {
 
-    private List<String> allowedOrigins = Arrays.asList("https://rpg-project.onrender.com", "https://rpg-project-bay.vercel.app");
+    private List<String> allowedOrigins = Arrays.asList("https://rpg-project.onrender.com", "https://rpg-project-bay.vercel.app", "http://localhost:3000");
 
     @Override
     public void doFilter(ServletRequest req, ServletResponse resp, FilterChain chain)
