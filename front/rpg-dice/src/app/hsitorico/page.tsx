@@ -37,10 +37,10 @@ const Settings = () => {
     const fetchData = async () => {
       try {
         api.defaults.withCredentials = true;    
+        api.defaults.withCredentials = true 
         api.get('/Rolagem/ObterRolagensDoUsuario', {
             headers: {
               'Content-Type': 'application/json',
-              "Cookie": `refreshToken=${localStorage.getItem('accessToken')}` 
             },
             withCredentials: true 
           })
