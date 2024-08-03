@@ -40,6 +40,7 @@ const Settings = () => {
         api.get('/Rolagem/ObterRolagensDoUsuario', {
             headers: {
               'Content-Type': 'application/json',
+              "Cookie": `refreshToken=${localStorage.getItem('accessToken')}` 
             },
             withCredentials: true 
           })
