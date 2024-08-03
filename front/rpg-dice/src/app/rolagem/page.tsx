@@ -131,6 +131,7 @@ const Settings = () => {
     api.post('/Rolagem/SalvarRolagem', listaDeDados, {
       headers: {
         'Content-Type': 'application/json',
+        'Token': localStorage.getItem("accessToken"),
       }
     })
     .then(response => {
