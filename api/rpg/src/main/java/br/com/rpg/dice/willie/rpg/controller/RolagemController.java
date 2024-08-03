@@ -33,11 +33,9 @@ public class RolagemController {
 	private RolagemService _Service;
    
 	@GetMapping("ObterRolagensDoUsuario")
-	public ResponseEntity<?> ObterRolagensDoUsuario(HttpServletRequest request) {
-		//Long userId = Long.parseLong(Utilidades.getInstance().getUserIdFromRequest(request));
-		Long userId = (long) 1;
-		return ResponseEntity.ok("aaa");
-		
+	public ResponseEntity<?> ObterRolagensDoUsuario(HttpServletRequest request) {		
+		Long userId = Long.parseLong(Utilidades.getInstance().getUserIdFromRequest(request));
+		return _Service.ObterRolagensDoUsuario(userId);
 	}
 	
 	@PostMapping("SalvarRolagem")
