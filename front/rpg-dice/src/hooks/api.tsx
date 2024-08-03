@@ -2,7 +2,7 @@
 import axios from 'axios';
 
 const api = axios.create({
-  baseURL: 'http://localhost:8080', 
+  baseURL: 'https://rpg-project.onrender.com', 
 });
 
 api.interceptors.response.use(

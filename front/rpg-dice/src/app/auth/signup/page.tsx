@@ -29,7 +29,7 @@ const SignUp: React.FC = () => {
       }
       if (senha == confirmSenha) {
         
-        axios.post('http://localhost:8080/Usuario/SalvarUsuario', {
+        axios.post('https://rpg-project.onrender.com/Usuario/SalvarUsuario', {
           "nome": nome,
           "email": email,
           "senha": senha
