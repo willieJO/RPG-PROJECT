@@ -42,6 +42,7 @@ const SignIn: React.FC = () => {
         'Content-Type': 'application/x-www-form-urlencoded',
         'Authorization': 'Basic Y2xpZW50OmNsaWVudA==',
       },
+      withCredentials: true
     })
     .then((response : any) => {
       localStorage.setItem("accessToken", response.data.access_token);
