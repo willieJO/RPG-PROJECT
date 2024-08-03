@@ -25,6 +25,7 @@ public class Utilidades {
     public String getUserIdFromRequest(HttpServletRequest request) {
         System.out.println("vou pegar o cokie");
         Cookie[] cookies = request.getCookies(); 
+        System.out.println("valor do cookie" + cookies);
         System.out.println("peguei o cokie");
     String accessToken = null;
     if (cookies != null) {
