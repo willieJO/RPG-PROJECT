@@ -23,33 +23,31 @@ public class Utilidades {
     }
 
     public String getUserIdFromRequest(HttpServletRequest request) {
-        System.out.println("vou pegar o cokie");
         Cookie[] cookies = request.getCookies(); 
-        System.out.println("valor do cookie" + cookies);
-        System.out.println("peguei o cokie");
-    String accessToken = null;
-    if (cookies != null) {
-        for (Cookie cookie : cookies) {
-            if (cookie.getName().equals("refreshToken")) { 
-                accessToken = cookie.getValue();
-                break;
+        String accessToken = request.getHeader("Token");
+        System.out.println("Token: " + accessToken);
+        if (accessToken != null) {
+            try {
+                // Remover o prefixo "Bearer " se ele estiver presente
+                if (accessToken.startsWith("Bearer ")) {
+                    accessToken = accessToken.substring(7); // Remove "Bearer "
+                }
+                
+                // Parse do token JWT
+                Claims claims = Jwts.parser()
+                        .setSigningKey("williekeyrpg".getBytes()) // Sua chave secreta
+                        .parseClaimsJws(accessToken)
+                        .getBody();
+                        
+                // Obter o ID do usuário do token
+                return claims.get("user_id").toString();
+            } catch (Exception e) {
+                // Lidar com exceções de parsing
+                e.printStackTrace();
+                return "";
             }
         }
-    }
-    if (accessToken != null) {
-        try {
-            Claims claims = Jwts.parser()
-                    .setSigningKey("williekeyrpg".getBytes()) 
-                    .parseClaimsJws(accessToken.replace("Bearer ", ""))
-                    .getBody();
-                    
-                    accessToken = claims.get("user_id").toString();
-            return accessToken;
-        } catch (Exception e) {
-            return "";
-        }
-    } else {
-    }
-    return "";
+        
+        return "";
     }
 }
