@@ -26,7 +26,6 @@ public class Utilidades {
         System.out.println("vou pegar o cokie");
         Cookie[] cookies = request.getCookies(); 
         System.out.println("peguei o cokie");
-        System.out.println(cookies.toString());
     String accessToken = null;
     if (cookies != null) {
         for (Cookie cookie : cookies) {
