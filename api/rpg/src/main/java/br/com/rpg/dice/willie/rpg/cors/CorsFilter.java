@@ -21,7 +21,11 @@ import org.springframework.stereotype.Component;
 @Order(Ordered.HIGHEST_PRECEDENCE)
 public class CorsFilter implements Filter {
 
-    private List<String> allowedOrigins = Arrays.asList("https://rpg-project.onrender.com", "https://rpg-project-bay.vercel.app", "http://localhost:3000");
+    private List<String> allowedOrigins = Arrays.asList(
+        "https://rpg-project.onrender.com",
+        "https://rpg-project-bay.vercel.app",
+        "http://localhost:3000"
+    );
 
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {}
@@ -35,8 +39,8 @@ public class CorsFilter implements Filter {
         String originHeader = request.getHeader("Origin");
         if (allowedOrigins.contains(originHeader)) {
             response.setHeader("Access-Control-Allow-Origin", originHeader);
-            response.setHeader("Access-Control-Allow-Credentials", "true");
-			response.setHeader("SameSite","None");
+            response.setHeader("Access-Control-Allow-Credentials", "true"); // Permite envio de cookies
+
             if ("OPTIONS".equals(request.getMethod())) {
                 response.setHeader("Access-Control-Allow-Methods", "POST, GET, DELETE, PUT, OPTIONS");
                 response.setHeader("Access-Control-Allow-Headers", "Authorization, Content-Type, Accept");
@@ -64,13 +68,17 @@ public class CorsFilter implements Filter {
         }
 
         public void processCookies() {
-            // Convert Collection<String> to List<String>
             Collection<String> headers = super.getHeaders("Set-Cookie");
             if (headers != null) {
-                // Clear existing headers
+                // Clear existing headers and re-add with SameSite=None; Secure
                 super.setHeader("Set-Cookie", ""); 
                 for (String header : headers) {
-                    super.addHeader("Set-Cookie", header + "; SameSite=None; Secure");
+                    if (header.contains("SameSite=")) {
+                        // Skip if SameSite already set
+                        super.addHeader("Set-Cookie", header);
+                    } else {
+                        super.addHeader("Set-Cookie", header + "; SameSite=None; Secure");
+                    }
                 }
             }
         }
