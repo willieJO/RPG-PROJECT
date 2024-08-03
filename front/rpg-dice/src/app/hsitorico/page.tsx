@@ -40,7 +40,8 @@ const Settings = () => {
         api.get('/Rolagem/ObterRolagensDoUsuario', {
             headers: {
               'Content-Type': 'application/json',
-            }
+            },
+            withCredentials: true 
           })
           .then(response => {
             setData(response.data);
